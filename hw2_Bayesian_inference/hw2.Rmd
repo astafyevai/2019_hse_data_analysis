@@ -1,0 +1,18 @@
+### 2.1
+```{r, echo = FALSE}
+data <- read.csv('https://raw.githubusercontent.com/agricolamz/2019_data_analysis_for_linguists/master/data/students/astafyevai/hw2_Bayesian_inference/hw2_phoible.csv')
+data$proportion <- data$consonants / data$phonemes
+
+print(data[which.max(data$proportion), 'language'])
+```
+
+### 2.2
+```{r, echo = FALSE}
+alpha <- 9.300246
+beta <- 4.4545 
+
+posterior <- (data$consonants + alpha) / (data$phonemes + alpha + beta)
+data$abs_difference <- abs(data$proportion - posterior)
+
+print(data[order(data$abs_difference, decreasing = T),][1:6, "language"])
+```
