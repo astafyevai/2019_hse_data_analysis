@@ -1,0 +1,38 @@
+### 3.1
+
+```{r, echo = FALSE}
+data_frame = read.csv('https://raw.githubusercontent.com/agricolamz/2019_data_analysis_for_linguists/master/data/students/astafyevai/hw3_Bayesian_inference/hw3_phoible.csv')
+dnorm(data_frame$consonants, mean = 22, sd = 6)
+```
+
+
+### 3.2
+
+```{r, echo = FALSE}
+df = read.csv('https://raw.githubusercontent.com/agricolamz/2019_data_analysis_for_linguists/master/data/letter_frequency.csv')
+most_function = colnames(c((df[13]), (df[15]), (df[19]), (df [20]))
+model = colnames(df[,-14])
+likelihood = c(most_function(df$French), most_function(df$German), most_function(df$Spanish),
+               most_function(df$Esperanto), most_function(df$Portuguese), most_function(df$Italian),
+               most_function(df$Finnish), most_function(df$Icelandic), most_function(df$Danish),
+               most_function(df$Dutch), most_function(df$Polish), most_function(df$Swedish),
+               most_function(df$Turkish))
+prior = 1/13
+product = prior*likelihood
+posterior = product/sum(product)
+
+df_posterior = data.frame(lang = colnames(df[,-14]), 
+                          prior = prior, likelihood = likelihood, 
+                          product = product, posterior = posterior)
+
+max(df_posterior$posterior)
+```
+
+### 3.3
+
+```{r, echo = FALSE}
+df_beta = read.csv('https://raw.githubusercontent.com/agricolamz/2019_data_analysis_for_linguists/master/data/students/astafyevai/hw3_Bayesian_inference/hw3_task_3.csv')
+#Betapost(αpost,βpost)=Beta(αprior+αdata,βprior+βdata)
+upd = (df_beta$a + 33)/(df_beta$a + 33 + df_beta$b + 77)
+upd
+```
