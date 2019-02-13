@@ -1,0 +1,40 @@
+### 4.1
+
+```{r, echo = FALSE}
+
+data_frame <- read.csv('https://raw.githubusercontent.com/agricolamz/2019_data_analysis_for_linguists/master/data/students/astafyevai/hw4_Advanced_Bayesian/hw4_caretta.csv')
+
+mean.prior <- mean (data_frame$vowel.dur, trim = 0.1)
+sd.prior <- sd (data_frame$vowel.dur)
+
+mean.brs <- mean (data_frame[data_frame$speaker == 'brs02', ]$vowel.dur)
+sd.brs <- sd (data_frame[data_frame$speaker == 'brs02', ]$vowel.dur)
+
+mean.posterior <- weighted.mean (c (mean.prior, mean.brs), c (1/sd.prior, 1/sd.brs))
+sd.posterior <-  (1/sd.prior + 1/sd.brs)^(-1)
+
+data.frame (speaker = 'brs02', mean.posterior = mean.posterior, sd.posterior = sd.posterior)
+
+```
+
+### 4.2
+
+```{r, echo = FALSE}
+
+data_frame <- read.csv('https://raw.githubusercontent.com/agricolamz/2019_data_analysis_for_linguists/master/data/students/astafyevai/hw4_Advanced_Bayesian/hw4_caretta.csv')
+
+mean.prior <- mean (data_frame$vowel.dur, trim = 0.1)
+sd.prior <- sd (data_frame$vowel.dur)
+
+mean.tt <- mean (data_frame[data_frame$speaker == 'tt01', ]$vowel.dur)
+sd.tt <- sd (data_frame[data_frame$speaker == 'tt01', ]$vowel.dur)
+
+mean.posterior.2 <- weighted.mean (c (mean.prior, mean.tt), c (1/sd.prior, 1/sd.tt))
+sd.posterior.2 <- (1/sd.prior + 1/sd.tt)^(-1)
+
+low_ci <- qnorm(.025, mean = mean.posterior.2, sd = sd.posterior.2)
+up_ci <- qnorm(.975, mean = mean.posterior.2, sd = sd.posterior.2)
+
+data.frame (speaker = 'tt01', low.ci = low_ci, up.ci = up_ci)
+
+```
